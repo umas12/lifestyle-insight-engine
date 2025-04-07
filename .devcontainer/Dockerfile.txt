@@ -1,0 +1,18 @@
+# Lightweight Debian image with Python & Node
+FROM mcr.microsoft.com/devcontainers/base:debian-12
+
+# ---- install Python 3.10 ----
+RUN apt-get update && \
+    apt-get install -y python3.10 python3.10-venv python3.10-dev && \
+    ln -s /usr/bin/python3.10 /usr/local/bin/python
+
+# ---- install Node 20 LTS ----
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
+
+# ---- install Yarn globally ----
+RUN npm install -g yarn
+
+# Pre‑create a venv so VS Code picks it up
+RUN python -m venv /workspace/.venv
+ENV PATH="/workspace/.venv/bin:${PATH}"
