@@ -13,7 +13,7 @@ def kafka_consumer(group):
         "auto.offset.reset": "earliest"
     })
     c.subscribe(["lifestyle.raw"])
-    return c
+    return c 
 
 chroma = chromadb.HttpClient(
     host="host.docker.internal",
