@@ -1,0 +1,32 @@
+services:
+  redpanda:
+    image: docker.redpanda.com/redpandadata/redpanda:v23.3.3
+    command: >
+      redpanda start
+      --overprovisioned
+      --smp 1
+      --memory 512M
+      --kafka-addr PLAINTEXT://0.0.0.0:9092            
+      --advertise-kafka-addr PLAINTEXT://host.docker.internal:9092
+    ports:
+      - "9092:9092"
+      - "9644:9644"
+    volumes:
+      - redpanda_data:/var/lib/redpanda/data
+  chroma:
+    image: ghcr.io/chroma-core/chroma:0.4.14
+    ports: ["8000:8000"]
+    volumes: ["chroma_data:/chroma/.chroma"]
+
+  redpanda-console:
+    image: docker.redpanda.com/redpandadata/console:latest
+    environment:
+      - KAFKA_BROKERS=redpanda:9092
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redpanda
+
+volumes:
+  redpanda_data:
+  chroma_data:
