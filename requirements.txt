@@ -1,10 +1,12 @@
 fastapi
 uvicorn
 langchain
-chromadb
+chromadb==0.4.14
 sentence-transformers
 requests
 python-dotenv
 praw
 schedule
 confluent-kafka
+accelerate
+bitsandbytes
