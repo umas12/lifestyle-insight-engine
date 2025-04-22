@@ -17,10 +17,10 @@ while True:
     # Publish to Redpanda
     producer.produce(
         topic="lifestyle.raw",
-        key="recipes",                         # helps downstream route by type
-        value=json.dumps(data).encode()     # bytes!
+        key="recipes",                       
+        value=json.dumps(data).encode()     
     )
-    producer.flush()                        # make sure it actually sends
+    producer.flush()                        
     
     print("🍲 saved", len(data.get("recipes", [])), "recipes")
-    time.sleep(180)                      # 480 calls/day ≪ 3 000 free/mo
+    time.sleep(180)                      # 480 calls/day (≪ 3 000 free/mo)

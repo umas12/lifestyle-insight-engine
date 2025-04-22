@@ -35,10 +35,10 @@ while True:
     # Publish to Redpanda
     producer.produce(
         topic="lifestyle.raw",
-        key="weather",                         # helps downstream route by type
-        value=json.dumps(data).encode()     # bytes!
+        key="weather",                        
+        value=json.dumps(data).encode()    
     )
-    producer.flush()                        # make sure it actually sends
+    producer.flush()                      
     
     print(f"☁️ {CITY}: {cw['temperature']}°C, wind {cw['windspeed']} km/h")
     time.sleep(600)                      # once every 6 hrs (no API key, no hard cap)

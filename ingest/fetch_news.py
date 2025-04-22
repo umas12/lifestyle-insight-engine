@@ -4,9 +4,8 @@ from dotenv import load_dotenv; load_dotenv()
 import os, requests, json, time, pathlib
 
 from confluent_kafka import Producer
-producer = Producer({
-    "bootstrap.servers": "host.docker.internal:9092"
-})
+producer = Producer({"bootstrap.servers": "host.docker.internal:9092"})
+print("Kafka bootstrap →", producer.list_topics(timeout=3).orig_broker_name)
 
 
 OUT = pathlib.Path(__file__).with_name("news.json")
@@ -19,10 +18,10 @@ while True:
     # Publish to Redpanda
     producer.produce(
         topic="lifestyle.raw",
-        key="news",                         # helps downstream route by type
-        value=json.dumps(data).encode()     # bytes!
+        key="news",                         
+        value=json.dumps(data).encode()     
     )
-    producer.flush()                        # make sure it actually sends
+    producer.flush()                      
     
     print("📰", len(data.get("articles", [])), "articles saved")
     time.sleep(60)                       # poll every minute (well under free 100 req/day)

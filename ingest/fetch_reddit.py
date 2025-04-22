@@ -27,10 +27,10 @@ while True:
     # Publish to Redpanda
     producer.produce(
         topic="lifestyle.raw",
-        key="reddit",                         # helps downstream route by type
-        value=json.dumps(posts).encode()     # bytes!
+        key="reddit",                   
+        value=json.dumps(posts).encode()   
     )
-    producer.flush()                        # make sure it actually sends
+    producer.flush()                        
     
     print("🔺", len(posts), "Reddit posts saved")
     time.sleep(120)                      # every 2 min (well within Reddit rules)
